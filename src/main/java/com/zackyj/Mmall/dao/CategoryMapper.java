@@ -2,6 +2,8 @@ package com.zackyj.Mmall.dao;
 
 import com.zackyj.Mmall.model.pojo.Category;
 
+import java.util.List;
+
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +18,8 @@ public interface CategoryMapper {
     int updateByPrimaryKey(Category record);
 
     int checkCategoryExist(String categoryName);
+
+    List<Category> selectCategoryChildrenByParentId(Integer parentId);
+
+    int discard(Integer categoryId, Integer status);
 }

@@ -25,7 +25,7 @@ public enum ExceptionEnum {
     NO_TOKEN(23003, "参数错误:无效的token"),
     RESET_PWD_ERROR(23004, "重置密码失败"),
 
-    UPDATE_FAILED(24000, "更新失败"),
+    UPDATE_FAILED(24000, "信息更新失败"),
     WRONG_PWD(24001, "原密码错误"),
     UPDATE_PWD_ERROR(24002, "密码修改失败"),
     UPDATE_EMAIL_EXIST(24003, "邮箱已被使用"),
@@ -36,6 +36,8 @@ public enum ExceptionEnum {
     ADD_CATEGORY_FAILED(30000, "添加品类失败"),
     WRONG_CATEGORY_ARGS(30001, "品类参数信息有误"),
     CATEGORY_NAME_EXIST(30002, "品类名称重复"),
+
+    UPDATE_CATEGORY_FAILED(30003, "更新品类信息失败"),
 
     ERROR_CODE(90000, "未知错误");
 

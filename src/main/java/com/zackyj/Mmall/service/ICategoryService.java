@@ -1,6 +1,9 @@
 package com.zackyj.Mmall.service;
 
 import com.zackyj.Mmall.common.CommonResponse;
+import com.zackyj.Mmall.model.vo.CategoryVO;
+
+import java.util.List;
 
 /**
  * @Description
@@ -12,5 +15,9 @@ public interface ICategoryService {
 
     CommonResponse updateName(Integer categoryId, String categoryName);
 
-    CommonResponse updateParent(Integer categoryId, Integer parentId);
+    CommonResponse getChildrenParallel(Integer categoryId);
+
+    CommonResponse<List<CategoryVO>> getRecursiveCategory(Integer categoryId);
+
+    CommonResponse discard(Integer categoryId, Integer status);
 }
