@@ -2,16 +2,15 @@ package com.zackyj.Mmall.controller.foreground;
 
 import com.zackyj.Mmall.common.CommonResponse;
 import com.zackyj.Mmall.common.Constant;
+import com.zackyj.Mmall.common.Exception.BusinessException;
 import com.zackyj.Mmall.common.Exception.ExceptionEnum;
 import com.zackyj.Mmall.model.pojo.User;
 import com.zackyj.Mmall.service.IUserService;
-import com.zackyj.Mmall.utils.BaseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerResponse;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,9 +29,7 @@ public class UserController {
     @PostMapping("/login")
     public CommonResponse<User> login(String username, String password, HttpSession session) {
         CommonResponse<User> response = userService.login(username, password);
-        if (BaseUtil.operateValid(response)) {
-            session.setAttribute(Constant.CURRENT_USER, response.getData());
-        }
+        session.setAttribute(Constant.CURRENT_USER, response.getData());
         return response;
     }
 
@@ -53,10 +50,10 @@ public class UserController {
     @PostMapping("/getUser")
     public CommonResponse<User> getCurrentUser(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user != null) {
-            return CommonResponse.success(user);
+        if (user == null) {
+            throw new BusinessException(ExceptionEnum.NEED_LOGIN);
         }
-        return CommonResponse.error(ExceptionEnum.NEED_LOGIN);
+        return CommonResponse.success(user);
     }
 
     @PostMapping("/forgetQuestion")
@@ -78,7 +75,7 @@ public class UserController {
     public CommonResponse<String> resetPwd(String oldPwd, String newPwd, HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
-            return CommonResponse.error(ExceptionEnum.NEED_LOGIN);
+            throw new BusinessException(ExceptionEnum.NEED_LOGIN);
         }
         return userService.resetPassword(oldPwd, newPwd, user);
     }
@@ -88,16 +85,16 @@ public class UserController {
         //检查是否登录
         User currentUser = (User) session.getAttribute(Constant.CURRENT_USER);
         if (currentUser == null) {
-            return CommonResponse.error(ExceptionEnum.NEED_LOGIN);
+            throw new BusinessException(ExceptionEnum.NEED_LOGIN);
         }
         //给传入的user 参数设置当前登录的用户 id 和用户名
         user.setId(currentUser.getId());
         user.setUsername(currentUser.getUsername());
+
         CommonResponse<User> response = userService.updateUserInfo(user);
-        if (BaseUtil.operateValid(response)) {
-            response.getData().setUsername(currentUser.getUsername());
-            session.setAttribute(Constant.CURRENT_USER, response.getData());
-        }
+
+        response.getData().setUsername(currentUser.getUsername());
+        session.setAttribute(Constant.CURRENT_USER, response.getData());
         return response;
     }
 }

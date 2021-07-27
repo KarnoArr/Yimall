@@ -46,7 +46,7 @@ public class CommonResponse<T> implements Serializable {
         return response;
     }
 
-    public static <T> CommonResponse<T> success(T data, int flag) {
+    public static <T> CommonResponse<T> success(T data, boolean isObj) {
         CommonResponse response = new CommonResponse();
         response.setStatus(OK_CODE);
         response.setData(data);

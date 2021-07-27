@@ -12,6 +12,7 @@ public class Constant {
     public static final String CURRENT_USER = "CurrentUser";
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
+    public static final String NO_USERNAME = "noUsername";
 
 
     /**
