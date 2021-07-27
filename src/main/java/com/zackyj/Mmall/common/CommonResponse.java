@@ -66,24 +66,32 @@ public class CommonResponse<T> implements Serializable {
          CommonResponse response = new CommonResponse();
          response.setStatus(OK_CODE);
          response.setMsg(msg);
-         response.setData(data);
-         return response;
+        response.setData(data);
+        return response;
     }
 
     //=================返回失败的方法============================
-    public static <T> CommonResponse<T> error(){
+    public static <T> CommonResponse<T> error() {
         CommonResponse response = new CommonResponse();
         response.setStatus(ERROR_CODE);
         return response;
     }
 
-    public static <T> CommonResponse<T> error(ExceptionEnum ee){
+    public static <T> CommonResponse<T> error(Integer code, String msg) {
+        CommonResponse response = new CommonResponse();
+        response.setStatus(code);
+        response.setMsg(msg);
+        return response;
+    }
+
+    public static <T> CommonResponse<T> error(ExceptionEnum ee) {
         CommonResponse response = new CommonResponse();
         response.setStatus(ee.getCode());
         response.setMsg(ee.getMsg());
         return response;
     }
-    public static <T> CommonResponse<T> error(String msg){
+
+    public static <T> CommonResponse<T> error(String msg) {
         CommonResponse response = new CommonResponse();
         response.setStatus(ERROR_CODE);
         response.setMsg(msg);
