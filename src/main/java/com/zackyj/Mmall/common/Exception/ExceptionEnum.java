@@ -39,6 +39,13 @@ public enum ExceptionEnum {
 
     UPDATE_CATEGORY_FAILED(30003, "更新品类信息失败"),
 
+    /**
+     * 商品管理模块
+     */
+    UPDATE_PDT_FAILED(31000, "更新产品信息失败"),
+    INSERT_PDT_FAILED(32000, "新增产品信息失败"),
+
+
     ERROR_CODE(90000, "未知错误");
 
     Integer code;
