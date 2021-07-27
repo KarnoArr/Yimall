@@ -39,15 +39,22 @@ public class CommonResponse<T> implements Serializable {
         return response;
     }
 
-    public static <T> CommonResponse<T> success(String msg){
-         CommonResponse response = new CommonResponse();
-         response.setStatus(OK_CODE);
-         response.setMsg(msg);
-         return response;
+    public static <T> CommonResponse<T> success(String msg) {
+        CommonResponse response = new CommonResponse();
+        response.setStatus(OK_CODE);
+        response.setMsg(msg);
+        return response;
+    }
+
+    public static <T> CommonResponse<T> success(T data, int flag) {
+        CommonResponse response = new CommonResponse();
+        response.setStatus(OK_CODE);
+        response.setData(data);
+        return response;
     }
 
     //成功：有参数
-    public static <T> CommonResponse<T> success(T data){
+    public static <T> CommonResponse<T> success(T data) {
         CommonResponse response = new CommonResponse();
         response.setStatus(OK_CODE);
         response.setMsg(OK_MSG);

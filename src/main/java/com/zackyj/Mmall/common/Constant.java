@@ -10,4 +10,38 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constant {
     public static final String CURRENT_USER = "CurrentUser";
+    public static final String EMAIL = "email";
+    public static final String USERNAME = "username";
+
+
+    /**
+     * 权限标识
+     * [内部接口进行常量分组，比枚举更加轻量]
+     */
+    public interface Role {
+        int ROLE_CUSTOMER = 0; //普通用户
+        int ROLE_ADMIN = 1;//管理员
+    }
+
+    /**
+     * 商品状态标识
+     */
+    public enum ProductStatusEnum {
+        ON_SALE(1, "在线");
+        private String value;
+        private int code;
+
+        ProductStatusEnum(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
 }
