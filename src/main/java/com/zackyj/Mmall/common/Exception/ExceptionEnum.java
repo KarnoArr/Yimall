@@ -6,6 +6,9 @@ package com.zackyj.Mmall.common.Exception;
  * @Created IN com.zackyj.Mmall.common.Exception ON 2021/7/26-周一.
  */
 public enum ExceptionEnum {
+    /**
+     * 用户模块
+     */
     BASE_ERROR_CODE(20000, "服务器异常"),
     WRONG_ARG(20001, "参数错误"),
     NEED_LOGIN(21000, "未登录"),
@@ -26,6 +29,13 @@ public enum ExceptionEnum {
     WRONG_PWD(24001, "原密码错误"),
     UPDATE_PWD_ERROR(24002, "密码修改失败"),
     UPDATE_EMAIL_EXIST(24003, "邮箱已被使用"),
+
+    /**
+     * 分类管理模块
+     */
+    ADD_CATEGORY_FAILED(30000, "添加品类失败"),
+    WRONG_CATEGORY_ARGS(30001, "品类参数信息有误"),
+    CATEGORY_NAME_EXIST(30002, "品类名称重复"),
 
     ERROR_CODE(90000, "未知错误");
 
