@@ -6,47 +6,49 @@ import com.zackyj.Mmall.common.Exception.BusinessException;
 import com.zackyj.Mmall.common.Exception.ExceptionEnum;
 import com.zackyj.Mmall.model.pojo.User;
 import com.zackyj.Mmall.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "前台用户模块")
 public class UserController {
-    @Autowired
+    @Resource
     IUserService userService;
-    /**
-     * 前台用户登录接口
-     * @param username
-     * @param password
-     * @param session
-     * @return
-     */
+
+    @ApiOperation(value = "登录")
+    @ApiImplicitParam(name = "username", value = "用户名", required = true)
     @PostMapping("/login")
-    public CommonResponse<User> login(String username, String password, HttpSession session) {
+    public CommonResponse<User> login(String username, String password, @ApiIgnore HttpSession session) {
         CommonResponse<User> response = userService.login(username, password);
         session.setAttribute(Constant.CURRENT_USER, response.getData());
         return response;
     }
 
-    /**
-     * 注销接口
-     */
+    @ApiOperation("注销")
     @GetMapping("/logout")
-    public CommonResponse logout(HttpSession session) {
+    public CommonResponse logout(@ApiIgnore HttpSession session) {
         session.removeAttribute(Constant.CURRENT_USER);
         return CommonResponse.success();
     }
 
+    @ApiOperation("注册")
     @PostMapping("/register")
     public CommonResponse register(User user) {
         return userService.register(user);
     }
 
+    @ApiOperation("获取当前登录用户信息")
     @PostMapping("/getUser")
     public CommonResponse<User> getCurrentUser(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
@@ -56,21 +58,25 @@ public class UserController {
         return CommonResponse.success(user);
     }
 
+    @ApiOperation("获取密码提示问题")
     @PostMapping("/forgetQuestion")
     public CommonResponse<String> getForgetQuestion(String username) {
         return userService.getForgetQuestion(username);
     }
 
+    @ApiOperation("验证问题答案")
     @PostMapping("/checkAnswer")
     public CommonResponse<String> checkAnswer(String username, String question, String answer) {
         return userService.checkAnswer(username, question, answer);
     }
 
+    @ApiOperation("重置密码(忘记密码状态)")
     @PostMapping("/forgetResetPwd")
     public CommonResponse<String> forgetRestPwd(String username, String newPwd, String forgetToken) {
         return userService.forgetResetPwd(username, newPwd, forgetToken);
     }
 
+    @ApiOperation("重置密码(登录状态)")
     @PostMapping("/resetPwd")
     public CommonResponse<String> resetPwd(String oldPwd, String newPwd, HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
@@ -80,6 +86,7 @@ public class UserController {
         return userService.resetPassword(oldPwd, newPwd, user);
     }
 
+    @ApiOperation("更新用户信息")
     @PostMapping("/updateInfo")
     public CommonResponse<User> updateInfo(HttpSession session, User user) {
         //检查是否登录
