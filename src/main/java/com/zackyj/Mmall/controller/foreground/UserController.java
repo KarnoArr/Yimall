@@ -1,5 +1,7 @@
 package com.zackyj.Mmall.controller.foreground;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.ApiSort;
 import com.zackyj.Mmall.common.CommonResponse;
 import com.zackyj.Mmall.common.Constant;
 import com.zackyj.Mmall.common.Exception.BusinessException;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "前台用户模块")
+@ApiSort(101)
 public class UserController {
     @Resource
     IUserService userService;

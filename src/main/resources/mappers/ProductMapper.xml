@@ -164,16 +164,24 @@
   <update id="updateByPrimaryKey" parameterType="com.zackyj.Mmall.model.pojo.Product">
     update mmall_product
     set category_id = #{categoryId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      subtitle = #{subtitle,jdbcType=VARCHAR},
-      main_image = #{mainImage,jdbcType=VARCHAR},
-      sub_images = #{subImages,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      stock = #{stock,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = now()
+        name        = #{name,jdbcType=VARCHAR},
+        subtitle    = #{subtitle,jdbcType=VARCHAR},
+        main_image  = #{mainImage,jdbcType=VARCHAR},
+        sub_images  = #{subImages,jdbcType=VARCHAR},
+        detail      = #{detail,jdbcType=VARCHAR},
+        price       = #{price,jdbcType=DECIMAL},
+        stock       = #{stock,jdbcType=INTEGER},
+        status      = #{status,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    ORDER BY id asc
+  </select>
+
 </mapper>

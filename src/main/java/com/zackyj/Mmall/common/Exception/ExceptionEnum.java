@@ -42,9 +42,11 @@ public enum ExceptionEnum {
     /**
      * 商品管理模块
      */
-    UPDATE_PDT_FAILED(31000, "更新产品信息失败"),
-    INSERT_PDT_FAILED(32000, "新增产品信息失败"),
+    UPDATE_PDT_FAILED(31000, "更新商品信息失败"),
+    SET_STATUS_FAILED(31001, "修改商品状态失败"),
+    INSERT_PDT_FAILED(32000, "新增商品信息失败"),
 
+    NO_PDT_INFO(33000, "无商品信息"),
 
     ERROR_CODE(90000, "未知错误");
 
