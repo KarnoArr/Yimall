@@ -16,5 +16,5 @@ public interface IProductService {
 
     CommonResponse<ProductDetailVO> managerProductDetail(Integer productId);
 
-    CommonResponse getProductListForAdmin(Integer pageNum, Integer pageSize);
+    CommonResponse getProductListForAdmin(Integer pageNum, Integer pageSize, String keyword);
 }

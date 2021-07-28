@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -94,9 +95,14 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public CommonResponse getProductListForAdmin(Integer pageNum, Integer pageSize) {
+    public CommonResponse getProductListForAdmin(Integer pageNum, Integer pageSize, String keyword) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Product> productList = productMapper.selectList();
+        List<Product> productList = null;
+        if (StringUtils.isNumeric(keyword)) {
+            productList = Collections.singletonList(productMapper.selectByPrimaryKey(Integer.valueOf(keyword)));
+        } else {
+            productList = productMapper.selectList(keyword);
+        }
         List<ProductListVO> productListVOList = new ArrayList<>();
         for (Product product : productList) {
             ProductListVO productListVO = new ProductListVO();

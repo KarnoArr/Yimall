@@ -17,5 +17,5 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product record);
 
-    List<Product> selectList();
+    List<Product> selectList(String name);
 }
