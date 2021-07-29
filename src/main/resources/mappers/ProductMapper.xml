@@ -188,5 +188,21 @@
     </where>
     ORDER BY id asc
   </select>
+  <select id="getListForUser" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    <where>
+      <if test="categoryId != null">
+        category_id = #{categoryId}
+      </if>
+      <if test="keyword != null">
+        AND name like CONCAT('%',#{keyword},'%')
+      </if>
+      <if test="sortBy!= null">
+        order by #{sortBy} ${sortOrder}
+      </if>
+    </where>
+  </select>
 
 </mapper>

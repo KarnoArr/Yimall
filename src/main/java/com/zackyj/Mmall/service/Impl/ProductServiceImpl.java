@@ -3,6 +3,7 @@ package com.zackyj.Mmall.service.Impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zackyj.Mmall.common.CommonResponse;
+import com.zackyj.Mmall.common.Constant;
 import com.zackyj.Mmall.common.Exception.BusinessException;
 import com.zackyj.Mmall.common.Exception.ExceptionEnum;
 import com.zackyj.Mmall.dao.CategoryMapper;
@@ -77,12 +78,7 @@ public class ProductServiceImpl implements IProductService {
         return CommonResponse.success("修改商品状态成功");
     }
 
-    @Override
-    public CommonResponse<ProductDetailVO> managerProductDetail(Integer productId) {
-        if (productId == null) throw new BusinessException(ExceptionEnum.WRONG_ARG);
-        Product product = productMapper.selectByPrimaryKey(productId);
-        if (product == null) throw new BusinessException(ExceptionEnum.NO_PDT_INFO);
-        //组装 VO 对象
+    private ProductDetailVO assembleProductDetailVO(Product product) {
         ProductDetailVO productDetailVO = new ProductDetailVO();
         BeanUtils.copyProperties(product, productDetailVO);
         productDetailVO.setImageHostPrefix(PropertiesUtil.getProperty("ftp.server.http.prefix", "defaultImageHostPrefix"));
@@ -91,7 +87,41 @@ public class ProductServiceImpl implements IProductService {
 
         productDetailVO.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
         productDetailVO.setUpdateTime(DateTimeUtil.dateToStr(product.getUpdateTime()));
+        return productDetailVO;
+    }
+
+    @Override
+    public CommonResponse<ProductDetailVO> getProductDetailForAdmin(Integer productId) {
+        if (productId == null) throw new BusinessException(ExceptionEnum.WRONG_ARG);
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if (product == null) throw new BusinessException(ExceptionEnum.NO_PDT_INFO);
+        //组装 VO 对象
+        ProductDetailVO productDetailVO = assembleProductDetailVO(product);
         return CommonResponse.success(productDetailVO);
+    }
+
+    @Override
+    public CommonResponse getProductDetail(Integer productId) {
+        if (productId == null) throw new BusinessException(ExceptionEnum.WRONG_ARG);
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if (product == null) throw new BusinessException(ExceptionEnum.NO_PDT_INFO);
+        if (product.getStatus() != Constant.ProductStatusEnum.ON_SALE.getCode()) {
+            throw new BusinessException(ExceptionEnum.NO_PDT_INFO);
+        }
+        //组装 VO 对象
+        ProductDetailVO productDetailVO = assembleProductDetailVO(product);
+        return CommonResponse.success(productDetailVO);
+    }
+
+    private List<ProductListVO> assembleProductListVO(List<Product> productList) {
+        List<ProductListVO> productListVOList = new ArrayList<>();
+        for (Product product : productList) {
+            ProductListVO productListVO = new ProductListVO();
+            BeanUtils.copyProperties(product, productListVO);
+            productListVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.xxxxx.com/"));
+            productListVOList.add(productListVO);
+        }
+        return productListVOList;
     }
 
     @Override
@@ -103,13 +133,17 @@ public class ProductServiceImpl implements IProductService {
         } else {
             productList = productMapper.selectList(keyword);
         }
-        List<ProductListVO> productListVOList = new ArrayList<>();
-        for (Product product : productList) {
-            ProductListVO productListVO = new ProductListVO();
-            BeanUtils.copyProperties(product, productListVO);
-            productListVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.xxxxx.com/"));
-            productListVOList.add(productListVO);
-        }
+        List<ProductListVO> productListVOList = assembleProductListVO(productList);
+        PageInfo pageResult = new PageInfo(productList);
+        pageResult.setList(productListVOList);
+        return CommonResponse.success(pageResult);
+    }
+
+    @Override
+    public CommonResponse getListForUser(Integer categoryId, String keyword, String sortBy, String sortOrder, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productMapper.getListForUser(categoryId, keyword, sortBy, sortOrder);
+        List<ProductListVO> productListVOList = assembleProductListVO(productList);
         PageInfo pageResult = new PageInfo(productList);
         pageResult.setList(productListVOList);
         return CommonResponse.success(pageResult);

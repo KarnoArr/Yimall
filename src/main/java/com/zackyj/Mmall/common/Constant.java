@@ -28,9 +28,9 @@ public class Constant {
      * 商品状态标识
      */
     public enum ProductStatusEnum {
-        ON_SALE(1, "在线");
-        private String value;
+        ON_SALE(1, "上架");
         private int code;
+        private String value;
 
         ProductStatusEnum(int code, String value) {
             this.code = code;
