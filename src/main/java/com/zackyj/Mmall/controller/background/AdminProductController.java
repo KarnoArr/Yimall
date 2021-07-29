@@ -51,20 +51,16 @@ public class AdminProductController {
         return productService.addOrUpdateProduct(product);
     }
 
-    /**
-     * 修改商品上下架状态
-     *
-     * @param productId
-     * @param status
-     * @return
-     */
+    @ApiOperation(value = "修改上下架状态")
     @PostMapping("/setStatus")
-    public CommonResponse setStatus(Integer productId, Integer status) {
+    public CommonResponse setStatus(@ApiParam(required = true) Integer productId,
+                                    @ApiParam(value = "商品状态,1-上架,2-下架", required = true) Integer status) {
         return productService.setSaleStatus(productId, status);
     }
 
-    @PostMapping("/detail")
-    public CommonResponse getDetail(Integer productId) {
+    @ApiOperation(value = "获取商品详情")
+    @GetMapping("/detail")
+    public CommonResponse getDetail(@ApiParam(required = true) Integer productId) {
         return productService.getProductDetailForAdmin(productId);
     }
 

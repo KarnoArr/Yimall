@@ -36,10 +36,10 @@ public class ProductController {
 
     @ApiOperation(value = "获取商品列表（搜索排序）")
     @GetMapping("/list")
-    public CommonResponse list(@RequestParam(value = "keyword", required = false) String keyword,
-                               @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                               @RequestParam(value = "sortBy", required = false) String sortBy,
-                               @RequestParam(value = "sortOrder", required = false) String sortOrder,
+    public CommonResponse list(@RequestParam(value = "关键字", required = false) String keyword,
+                               @RequestParam(value = "分类ID", required = false) Integer categoryId,
+                               @RequestParam(value = "排序字段", required = false) String sortBy,
+                               @RequestParam(value = "排序顺序", required = false) String sortOrder,
                                @RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber,
                                @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
         return productService.getListForUser(categoryId, keyword, sortBy, sortOrder, pageNumber, pageSize);
