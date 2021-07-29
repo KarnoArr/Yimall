@@ -30,7 +30,6 @@ public class UserController {
     IUserService userService;
 
     @ApiOperation(value = "登录")
-    @ApiImplicitParam(name = "username", value = "用户名", required = true)
     @PostMapping("/login")
     public CommonResponse<User> login(String username, String password, @ApiIgnore HttpSession session) {
         CommonResponse<User> response = userService.login(username, password);
