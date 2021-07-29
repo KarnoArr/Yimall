@@ -14,7 +14,11 @@ public interface IProductService {
 
     CommonResponse setSaleStatus(Integer productId, Integer status);
 
-    CommonResponse<ProductDetailVO> managerProductDetail(Integer productId);
+    CommonResponse<ProductDetailVO> getProductDetailForAdmin(Integer productId);
+
+    CommonResponse getProductDetail(Integer productId);
 
     CommonResponse getProductListForAdmin(Integer pageNum, Integer pageSize, String keyword);
+
+    CommonResponse getListForUser(Integer categoryId, String keyword, String sortBy, String sortOrder, Integer pageNumber, Integer pageSize);
 }

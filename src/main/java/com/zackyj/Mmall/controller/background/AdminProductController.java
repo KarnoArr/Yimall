@@ -35,7 +35,7 @@ public class AdminProductController {
     @ApiParam(name = "keyword", value = "关键字,可以传商品名关键字（非纯数字）或商品ID", required = false)
     @GetMapping("/list")
     public CommonResponse getList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, String keyword) {
+                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, @RequestParam(value = "keyword", required = false) String keyword) {
         return productService.getProductListForAdmin(pageNum, pageSize, keyword);
     }
 
@@ -65,7 +65,7 @@ public class AdminProductController {
 
     @PostMapping("/detail")
     public CommonResponse getDetail(Integer productId) {
-        return productService.managerProductDetail(productId);
+        return productService.getProductDetailForAdmin(productId);
     }
 
     @ApiOperation("文件上传接口")
