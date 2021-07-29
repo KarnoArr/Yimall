@@ -45,8 +45,15 @@ public enum ExceptionEnum {
     UPDATE_PDT_FAILED(31000, "更新商品信息失败"),
     SET_STATUS_FAILED(31001, "修改商品状态失败"),
     INSERT_PDT_FAILED(32000, "新增商品信息失败"),
-
     NO_PDT_INFO(33000, "无商品信息"),
+
+    /**
+     * 收货地址管理
+     */
+    ADD_SHIPPING_ADDR_FAILED(40001, "添加收货地址失败"),
+    DELETE_SHIPPING_ADDR_FAILED(40002, "删除收货地址失败"),
+    UPDATE_SHIPPING_ADDR_FAILED(40003, "更新收货地址失败"),
+    GET_SHIPPING_ADDR_DETAILE_FAILED(40004, "查询地址详情失败"),
 
     ERROR_CODE(90000, "未知错误");
 
