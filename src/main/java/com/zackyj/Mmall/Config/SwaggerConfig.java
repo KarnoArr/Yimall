@@ -1,9 +1,7 @@
 package com.zackyj.Mmall.Config;
 
 import com.zackyj.Mmall.annotations.EnableKnife4j;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.ApiInfoBuilder;

@@ -4,9 +4,11 @@ import com.zackyj.Mmall.common.CommonResponse;
 import com.zackyj.Mmall.common.Constant;
 import com.zackyj.Mmall.common.Exception.ExceptionEnum;
 import com.zackyj.Mmall.model.pojo.User;
+import com.zackyj.Mmall.model.vo.CartVO;
 import com.zackyj.Mmall.service.ICartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +42,8 @@ public class CartController {
 
     @PostMapping("/add")
     @ApiOperation(value = "添加购物车")
-    public CommonResponse add(Integer count, Integer productId, @ApiIgnore HttpSession session) {
+    public CommonResponse<CartVO> add(Integer count, Integer productId, @ApiIgnore HttpSession session) {
+        //参数校验
         //鉴权
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
@@ -49,7 +52,7 @@ public class CartController {
         return cartService.add(user.getId(), count, productId);
     }
 
-    @PostMapping("update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改购物车商品数量")
     public CommonResponse update(@ApiIgnore HttpSession session, Integer productId, Integer count) {
         //鉴权
@@ -60,9 +63,10 @@ public class CartController {
         return cartService.update(user.getId(), productId, count);
     }
 
-    @PostMapping("update")
+    @PostMapping("/delete")
     @ApiOperation(value = "删除购物车记录")
-    public CommonResponse delete(@ApiIgnore HttpSession session, Integer productId) {
+    public CommonResponse delete(@ApiIgnore HttpSession session,
+                                 @ApiParam(value = "删除多个时要求以,分隔的字符串") String productId) {
         //鉴权
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {

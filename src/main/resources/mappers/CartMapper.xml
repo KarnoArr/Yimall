@@ -16,22 +16,57 @@
     id, user_id, product_id, quantity, checked, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select
+    <include refid="Base_Column_List"/>
     from mmall_cart
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByUserAndPdtId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_cart
+    where user_id = #{userId}
+    and product_id = #{productId}
+  </select>
+  <select id="selectListByUserId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_cart
+    where user_id = #{userId}
+  </select>
+  <select id="selectAllChecked" resultType="int" parameterType="int">
+    select count(1)
+    from mmall_cart
+    where user_id = #{userId}
+      and checked = 0;
+  </select>
+  <select id="getAllCount" resultType="int" parameterType="int">
+    select IFNULL(sum(quantity), 0) as count
+    from mmall_cart
+    where user_id = #{id}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from mmall_cart
+    delete
+    from mmall_cart
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByUserAndPdtId" parameterType="map">
+    delete from mmall_cart
+    where user_id = #{userId}
+    <if test="productIdList != null">
+      and product_id in
+      <foreach collection="productIdList" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.zackyj.Mmall.model.pojo.Cart">
-    insert into mmall_cart (id, user_id, product_id, 
-      quantity, checked, create_time, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
-      #{quantity,jdbcType=INTEGER}, #{checked,jdbcType=INTEGER}, now(),
-      now())
+    insert into mmall_cart (id, user_id, product_id,
+                            quantity, checked, create_time,
+                            update_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER},
+            #{quantity,jdbcType=INTEGER}, #{checked,jdbcType=INTEGER}, now(),
+            now())
   </insert>
   <insert id="insertSelective" parameterType="com.zackyj.Mmall.model.pojo.Cart">
     insert into mmall_cart
@@ -108,12 +143,21 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zackyj.Mmall.model.pojo.Cart">
     update mmall_cart
-    set user_id = #{userId,jdbcType=INTEGER},
-      product_id = #{productId,jdbcType=INTEGER},
-      quantity = #{quantity,jdbcType=INTEGER},
-      checked = #{checked,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = now()
+    set user_id     = #{userId,jdbcType=INTEGER},
+        product_id  = #{productId,jdbcType=INTEGER},
+        quantity    = #{quantity,jdbcType=INTEGER},
+        checked     = #{checked,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = now()
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="changeCheckedStatus" parameterType="map">
+    UPDATE mmall_cart
+    set checked = #{checked},
+    update_time = now()
+    where user_id = #{userId}
+    <if test="productId != null">
+      and product_id = #{productId}
+    </if>
   </update>
 </mapper>

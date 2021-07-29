@@ -8,15 +8,15 @@ import com.zackyj.Mmall.common.CommonResponse;
  * @Created IN com.zackyj.Mmall.service ON 2021/7/29-周四.
  */
 public interface ICartService {
-    CommonResponse list(Integer id);
+    CommonResponse list(Integer userId);
 
-    CommonResponse add(Integer id, Integer count, Integer productId);
+    CommonResponse add(Integer userId, Integer count, Integer productId);
 
-    CommonResponse update(Integer id, Integer productId, Integer count);
+    CommonResponse update(Integer userId, Integer productId, Integer count);
 
-    CommonResponse delete(Integer id, Integer productId);
+    CommonResponse delete(Integer userId, String productId);
 
-    CommonResponse getCount(Integer id);
+    CommonResponse getCount(Integer userId);
 
-    CommonResponse changeCheckedStatus(Integer id, Integer productId, int checked);
+    CommonResponse changeCheckedStatus(Integer userId, Integer productId, int checked);
 }

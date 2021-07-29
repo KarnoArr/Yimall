@@ -25,12 +25,20 @@ public class Constant {
     }
 
     /**
-     * 购物车选中状态标识
+     * 购物车标识
      */
     public interface Cart {
+
+        /**
+         * 购物车记录选中状态
+         */
         int CHECKED = 1;//即购物车选中状态
         int UN_CHECKED = 0;//购物车中未选中状态
 
+
+        /**
+         * 购物车记录商品数量是否被库存限制
+         */
         String LIMIT_NUM_FAIL = "LIMIT_NUM_FAIL";
         String LIMIT_NUM_SUCCESS = "LIMIT_NUM_SUCCESS";
     }
