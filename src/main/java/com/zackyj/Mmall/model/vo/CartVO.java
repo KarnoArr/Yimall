@@ -15,7 +15,7 @@ public class CartVO {
     private List<CartProductVO> cartProductList;
     private BigDecimal cartTotalPrice;
     private Boolean isAllChecked;
-    private String imageHost;
+    //private String imageHost;
 
     public List<CartProductVO> getCartProductList() {
         return cartProductList;

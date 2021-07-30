@@ -81,7 +81,7 @@ public class ProductServiceImpl implements IProductService {
     private ProductDetailVO assembleProductDetailVO(Product product) {
         ProductDetailVO productDetailVO = new ProductDetailVO();
         BeanUtils.copyProperties(product, productDetailVO);
-        productDetailVO.setImageHostPrefix(PropertiesUtil.getProperty("ftp.server.http.prefix", "defaultImageHostPrefix"));
+        //productDetailVO.setImageHostPrefix(PropertiesUtil.getProperty("ftp.server.http.prefix", "defaultImageHostPrefix"));
         Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
         productDetailVO.setParentCategoryId(category.getParentId());
 
@@ -118,7 +118,7 @@ public class ProductServiceImpl implements IProductService {
         for (Product product : productList) {
             ProductListVO productListVO = new ProductListVO();
             BeanUtils.copyProperties(product, productListVO);
-            productListVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.xxxxx.com/"));
+            //productListVO.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.xxxxx.com/"));
             productListVOList.add(productListVO);
         }
         return productListVOList;

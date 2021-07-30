@@ -20,5 +20,5 @@ public class ProductListVO {
 
     private Integer status;
 
-    private String imageHost;
+    //private String imageHost;
 }

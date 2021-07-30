@@ -23,6 +23,6 @@ public class ProductDetailVO {
     private String createTime;
     private String updateTime;
 
-    private String imageHostPrefix;
+    //private String imageHostPrefix;
     private Integer parentCategoryId;
 }
