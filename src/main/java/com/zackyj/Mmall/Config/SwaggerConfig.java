@@ -36,8 +36,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                       .title("SSM_MALL Api Documentation")
-                       .description("SSM_MALL项目API接口文档")
+                       .title("YIMALL Api Documentation")
+                       .description("YIMALL项目API接口文档")
                        .termsOfServiceUrl("https://www.uuuvw.xyz/")
                        .license("zackyjz@qq.com")
                        .version("1.0.0")
