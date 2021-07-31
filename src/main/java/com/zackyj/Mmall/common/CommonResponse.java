@@ -2,6 +2,8 @@ package com.zackyj.Mmall.common;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zackyj.Mmall.common.Exception.ExceptionEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,9 +14,13 @@ import java.util.concurrent.CompletableFuture;
  * @author zackyj
  */
 @Data
+@ApiModel(description = "统一返回对象")
 public class CommonResponse<T> implements Serializable {
+    @ApiModelProperty(value = "状态码,不是10000则失败", required = true)
     private Integer status;
+    @ApiModelProperty(value = "提示信息")
     private String msg;
+    @ApiModelProperty(value = "响应携带数据")
     private T data;
 
     private static final int OK_CODE = 10000;

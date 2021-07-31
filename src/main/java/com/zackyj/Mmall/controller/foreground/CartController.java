@@ -9,10 +9,7 @@ import com.zackyj.Mmall.service.ICartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -42,7 +39,7 @@ public class CartController {
 
     @PostMapping("/add")
     @ApiOperation(value = "添加购物车")
-    public CommonResponse<CartVO> add(Integer count, Integer productId, @ApiIgnore HttpSession session) {
+    public CommonResponse<CartVO> add(@RequestParam(defaultValue = "1") Integer count, Integer productId, @ApiIgnore HttpSession session) {
         //参数校验
         //鉴权
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
