@@ -53,15 +53,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     public CommonResponse<User> register(User user) {
         //检查用户名是否可用
-        CommonResponse response = this.checkValid(user.getUsername(), Constant.USERNAME);
-        if (!BaseUtil.operateValid(response)) {
-            return response;
-        }
+        this.checkValid(user.getUsername(), Constant.USERNAME);
         //检查邮箱是否可用
-        response = this.checkValid(user.getEmail(), Constant.EMAIL);
-        if (!BaseUtil.operateValid(response)) {
-            return response;
-        }
+        this.checkValid(user.getEmail(), Constant.EMAIL);
         //设置为普通用户权限标识
         user.setRole(Constant.Role.ROLE_CUSTOMER);
         //密码MD5 加密后插入
@@ -81,9 +75,9 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public CommonResponse<String> checkValid(String str, String type) {
+    public void checkValid(String str, String type) {
         if (StringUtils.isNotBlank(type)) {
-            //开始校验
+            //传入"username",判断 str 的用户名是否已经存在
             if (Constant.USERNAME.equals(type)) {
                 int resultCount = userMapper.checkUsername(str);
                 if (resultCount > 0) {
@@ -96,6 +90,7 @@ public class UserServiceImpl implements IUserService {
                     throw new BusinessException(ExceptionEnum.EMAIL_EXIST);
                 }
             }
+            //传入"noUsername",判断 str 的用户名是否不存在
             if (Constant.NO_USERNAME.equals(type)) {
                 int resultCount = userMapper.checkUsername(str);
                 if (resultCount == 0) {
@@ -105,7 +100,6 @@ public class UserServiceImpl implements IUserService {
         } else {
             throw new BusinessException(ExceptionEnum.WRONG_ARG);
         }
-        return CommonResponse.success("校验成功");
     }
 
     /**
@@ -116,7 +110,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public CommonResponse<String> getForgetQuestion(String username) {
-        CommonResponse<String> response = this.checkValid(username, Constant.NO_USERNAME);
+        this.checkValid(username, Constant.NO_USERNAME);
         String question = userMapper.selectQuestionByUsername(username);
         if (StringUtils.isBlank(question)) {
             throw new BusinessException(ExceptionEnum.NO_FORGET_Q);
@@ -144,7 +138,7 @@ public class UserServiceImpl implements IUserService {
             throw new BusinessException(ExceptionEnum.NO_TOKEN);
         }
         //参数校验：username 是否存在
-        CommonResponse<String> response = this.checkValid(username, Constant.NO_USERNAME);
+        this.checkValid(username, Constant.NO_USERNAME);
         //校验本地 cache 中是否为空
         String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + username);
         if (StringUtils.isBlank(token)) {

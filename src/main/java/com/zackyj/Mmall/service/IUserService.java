@@ -8,7 +8,7 @@ public interface IUserService {
 
     CommonResponse<User> register(User user);
 
-    CommonResponse<String> checkValid(String str, String type);
+    void checkValid(String str, String type);
 
     CommonResponse<String> getForgetQuestion(String username);
 
