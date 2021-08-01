@@ -11,9 +11,9 @@
     <!-- 扫描service相关的bean -->
     <context:component-scan base-package="com.zackyj.Mmall"/>
 
+
     <!--	<bean id="markdownFiles" class="io.swagger.models.MarkdownFiles" init-method="init">-->
     <!--		<property name="basePath" value="classpath:markdown/*"></property>-->
     <!--	</bean>-->
-    <aop:aspectj-autoproxy/>
 
 </beans>

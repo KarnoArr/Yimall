@@ -104,6 +104,6 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public CommonResponse discard(Integer categoryId, Integer status) {
         int count = categoryMapper.discard(categoryId, status);
-        return null;
+        return CommonResponse.success("状态修改成功");
     }
 }

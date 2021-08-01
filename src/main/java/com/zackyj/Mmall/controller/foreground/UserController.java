@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -28,12 +29,15 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Resource
     IUserService userService;
+    @Resource
+    RestTemplate restTemplate;
 
     @ApiOperation(value = "登录")
     @PostMapping("/login")
     public CommonResponse<User> login(String username, String password, @ApiIgnore HttpSession session) {
         CommonResponse<User> response = userService.login(username, password);
         session.setAttribute(Constant.CURRENT_USER, response.getData());
+        restTemplate.getForObject("https://api.day.app/bnCK3nyeGN56tvGKJnEMYn/YIMALL/{1}", String.class, username + "登录了");
         return response;
     }
 
