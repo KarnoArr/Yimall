@@ -21,9 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Description
@@ -40,6 +38,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public CommonResponse addOrUpdateProduct(Product product) {
         if (product != null) {
+            product.setStatus(1);
             if (StringUtils.isNotBlank(product.getSubImages())) {
                 String[] subImageArray = product.getSubImages().split(",");
                 if (subImageArray.length > 0) {
@@ -59,7 +58,7 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
         }
-        return CommonResponse.success("保存商品成功");
+        return CommonResponse.success("保存商品更改成功");
     }
 
     @Override
@@ -143,6 +142,13 @@ public class ProductServiceImpl implements IProductService {
     public CommonResponse getListForUser(Integer categoryId, String keyword, String sortBy, String sortOrder, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Product> productList = productMapper.getListForUser(categoryId, keyword, sortBy, sortOrder);
+        if (StringUtils.isNotBlank(sortBy) && sortBy.equals("price")) {
+            if (sortOrder.equals("desc")) {
+                productList.sort(Comparator.comparing(Product::getPrice).reversed());
+            } else {
+                productList.sort(Comparator.comparing(Product::getPrice));
+            }
+        }
         List<ProductListVO> productListVOList = assembleProductListVO(productList);
         PageInfo pageResult = new PageInfo(productList);
         pageResult.setList(productListVOList);
