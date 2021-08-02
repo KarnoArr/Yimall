@@ -21,7 +21,6 @@
         </encoder>
     </appender>
 
-
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>/tmp/logs/error/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -39,8 +38,8 @@
         </filter>
     </appender>
 
-    <logger name="com.mmall" additivity="false" level="INFO" >
-        <appender-ref ref="mmall" />
+    <logger name="com.zackyj.Mmall" additivity="false" level="INFO">
+        <appender-ref ref="mmall"/>
         <appender-ref ref="console"/>
     </logger>
 
