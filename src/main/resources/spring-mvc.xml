@@ -33,7 +33,7 @@
     <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
 
     <!-- 扫描web相关的bean -->
-    <context:component-scan base-package="com.zackyj.Mmall"/>
+    <context:component-scan base-package="com.zackyj.Mmall.controller"/>
     <context:component-scan base-package="com.zackyj.Mmall.aop"/>
 
     <!--文件上传-->
