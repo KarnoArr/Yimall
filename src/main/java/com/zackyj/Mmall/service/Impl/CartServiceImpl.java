@@ -49,7 +49,7 @@ public class CartServiceImpl implements ICartService {
             Cart newCart = new Cart();
             newCart.setUserId(userId);
             newCart.setProductId(productId);
-            newCart.setQuantity(1);
+            newCart.setQuantity(count);
             newCart.setChecked(Constant.Cart.CHECKED);
             cartMapper.insert(newCart);
         } else {

@@ -48,12 +48,23 @@ public enum ExceptionEnum {
     NO_PDT_INFO(33000, "无商品信息"),
 
     /**
-     * 收货地址管理
+     * 收货地址模块
      */
     ADD_SHIPPING_ADDR_FAILED(40001, "添加收货地址失败"),
     DELETE_SHIPPING_ADDR_FAILED(40002, "删除收货地址失败"),
     UPDATE_SHIPPING_ADDR_FAILED(40003, "更新收货地址失败"),
     GET_SHIPPING_ADDR_DETAILE_FAILED(40004, "查询地址详情失败"),
+
+    /**
+     * 订单模块
+     */
+    EMPTY_CART(50001, "已勾选购物车为空"),
+    NOT_ON_SALE(50002, "存在未上架商品"),
+    NO_ENOUGH_STOCK(50003, "库存不足"),
+    CREATE_ORDER_FAILED(50004, "创建订单失败"),
+    NO_SUCH_ORDER(50005, "订单不存在"),
+    PAID_ORDER_CANCEL(50006, "订单已付款，请联系客服退款"),
+    CANCEL_ORDER_FAILED(50007, "订单取消失败"),
 
     ERROR_CODE(90000, "未知错误");
 

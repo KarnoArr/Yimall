@@ -193,15 +193,15 @@
     <include refid="Base_Column_List"/>
     from mmall_product
     <where>
-      <if test="categoryId != null">
-        category_id = #{categoryId}
+      <if test="categoryId != null and categoryId != ''">
+          category_id = #{categoryId}
       </if>
-      <if test="keyword != null">
-        AND name like CONCAT('%',#{keyword},'%')
-      </if>
-      <if test="sortBy!= null">
-        order by #{sortBy} ${sortOrder}
-      </if>
+        <if test="keyword != null and keyword != ''">
+            AND name like CONCAT('%',#{keyword},'%')
+        </if>
+        <if test="sortBy!=null and sortBy != ''">
+            order by #{sortBy} ${sortOrder}
+        </if>
     </where>
   </select>
 

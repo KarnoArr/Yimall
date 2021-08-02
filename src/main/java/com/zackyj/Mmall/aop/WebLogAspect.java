@@ -26,7 +26,6 @@ import java.util.Arrays;
 @Slf4j
 @Component
 public class WebLogAspect {
-    //@Pointcut("execution(* com.zackyj.Mmall.controller.*(..))")
     @Pointcut("execution(public * com.zackyj.Mmall.controller..*.*(..))")
     public void webLog() {
     }
